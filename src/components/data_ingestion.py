@@ -7,6 +7,7 @@ from pathlib import Path
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
+from src.components.data_transformation import DataTransformation
 from src.exception import CustomException
 from src.logger import logger
 
@@ -75,4 +76,8 @@ class DataIngestion:
 
 
 if __name__ == "__main__":
-    DataIngestion().initiate_data_ingestion()
+    ingestion = DataIngestion()
+    train_path, test_path = ingestion.initiate_data_ingestion()
+
+    transformation = DataTransformation()
+    transformation.initiate_data_transformation(train_path, test_path)
