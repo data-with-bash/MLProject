@@ -111,15 +111,18 @@ class DataTransformation:
 
             preprocessor = self.get_data_transformer_object()
             logger.info("Fitting preprocessing pipeline on training data")
-            train_features_array = preprocessor.fit_transform(train_features)
-            test_features_array = preprocessor.transform(test_features)
+            train_features_array = np.asarray(
+                preprocessor.fit_transform(train_features), dtype=np.float64
+            )
+            test_features_array = np.asarray(
+                preprocessor.transform(test_features), dtype=np.float64
+            )
 
-            train_array = np.hstack(
-                (train_features_array, train_targets.to_numpy().reshape(-1, 1))
-            )
-            test_array = np.hstack(
-                (test_features_array, test_targets.to_numpy().reshape(-1, 1))
-            )
+            train_targets_array = train_targets.to_numpy(dtype=np.float64).reshape(-1, 1)
+            test_targets_array = test_targets.to_numpy(dtype=np.float64).reshape(-1, 1)
+
+            train_array = np.hstack((train_features_array, train_targets_array))
+            test_array = np.hstack((test_features_array, test_targets_array))
 
             save_object(
                 file_path=self.data_transformation_config.preprocessor_obj_file_path,
