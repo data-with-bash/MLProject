@@ -2,8 +2,9 @@ from flask import Flask, request, render_template
 from typing import cast
 from src.pipeline.predict_pipeline import CustomData, PredictPipeline
 
-app = Flask(__name__)
-application = app
+application = Flask(__name__)
+
+app = application  
 
 ## Route for home page
 @app.route("/")
